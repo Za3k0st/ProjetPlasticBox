@@ -10,15 +10,11 @@
 
     <!--<script type="text/javascript" src="<?=base_url()?>assets/js/bootstrap-multiselect.js"></script>
     <link rel="stylesheet" href="<?=base_url()?>assets/css/bootstrap-multiselect.css" type="text/css"/>-->
-
-    <script type="text/javascript" src="<?=base_url()?>assets/js/sol.js"></script>
-    <link rel="stylesheet" href="<?=base_url()?>assets/css/sol.css" type="text/css"/>
-
   </head>
 
   <body>
     <div class="MainTitle" align="center">
-      <h1>Générateur de commande</h1>
+      <h1></h1>
     </div>
 
     <div class="container">

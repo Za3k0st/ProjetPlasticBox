@@ -6,10 +6,13 @@
     <link rel="stylesheet" href="<?=base_url()?>assets/css/style.css">
     <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css">
     <script src="<?=base_url()?>bootstrap/js/jquery-2.2.4.min.js"></script>
-		<script src="<?=base_url()?>bootstrap/js/bootstrap.min.js"></script>
+    <script src="<?=base_url()?>bootstrap/js/bootstrap.min.js"></script>
 
     <!--<script type="text/javascript" src="<?=base_url()?>assets/js/bootstrap-multiselect.js"></script>
     <link rel="stylesheet" href="<?=base_url()?>assets/css/bootstrap-multiselect.css" type="text/css"/>-->
+
+    <script type="text/javascript" src="<?=base_url()?>assets/js/sol.js"></script>
+    <link rel="stylesheet" href="<?=base_url()?>assets/css/sol.css" type="text/css"/>
   </head>
 
   <body>
@@ -22,6 +25,7 @@
         <div class="jumbotron">
 
           <form class="form-signin" method="POST" action="<?=base_url()?>/orders/addOrders">
+
             <div class="row">
               <div class="col-sm-6">
                 <label for="nbr_command"><i class="fa fa-cart-arrow-down"></i>Nombre de commande(s) souhaitée(s):</label>
@@ -40,8 +44,11 @@
               </div>
             </div>
 
-            <div class="option_title" align="center">
-              <h3>Option de filtrage</h3>
+            <div class="row">
+              <div class="col-sm-12">
+                <label for="nbr_max_product"><i class="fa fa-list-ol"></i>Quantité max par produit:</label>
+                <input class="form-control" type="text" name="nbr_max_product" id="nbr_max_product">
+              </div>
             </div>
 
             <div class="row">

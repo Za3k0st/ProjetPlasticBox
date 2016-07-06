@@ -2,7 +2,7 @@
   <div class="content-wrapper">
     <!-- Content Header (Page header) -->
       <!-- Content Header (Page header) -->
-      <section class="content-header">
+      <section class="content-header" align="center">
         <h1>
           Générateur de commande
         </h1>
@@ -11,38 +11,53 @@
       <!-- Main content -->
       <section class="content">
 
+        <div class="container">
+          <div class="col-md-offset-2 col-md-8">
 
-        <div class="row">
-          <div class="col-md-6">
             <div class="jumbotron">
 
-              <form class="form-signin" method="POST" action="<?=base_url()?>/orders/addOrders">
+              <form class="form-signin" method="POST" action="orders/addOrders">
+
                 <div class="row">
-                  <div class="col-sm-6">
-                    <label for="nbr_command"><i class="fa fa-cart-arrow-down"></i>Nombre de commande(s) souhaitée(s):</label>
-                    <input class="form-control" type="text" name="nbr_command" id="nbr_command">
+                  <div class="col-sm-12">
+                    <label for="nbr_command"><i class="fa fa-cart-arrow-down"></i>Nombre de commande(s) souhaitée(s) durant la première semaine:</label>
+                    <input class="form-control" type="text" name="nbr_command" id="nbr_command" required>
                   </div>
                 </div>
 
                 <div class="row">
-                  <div class="col-sm-6">
-                    <label for="h_begin"><i class="fa fa-hourglass-start" aria-hidden="true"></i>Intervalle début</label>
-                    <input class="form-control" type="text" name="nbr_command" id="h_begin">
-                  </div>
-                  <div class="col-sm-6">
-                    <label for="h_end"><i class="fa fa-hourglass-end" aria-hidden="true"></i>Intervalle fin</label>
-                    <input class="form-control" type="text" name="nbr_command" id="h_end">
+                  <!--<div class="col-sm-6">
+                    <label for="min_product"><i class="fa fa-arrow-down" aria-hidden="true"></i>Nombre min de produits:</label>
+                    <input class="form-control" type="text" name="nbr_min_product" id="min_product" required>
+                  </div>-->
+                  <div class="col-sm-12">
+                    <label for="max_product"><i class="fa fa-arrow-up" aria-hidden="true"></i>Nombre max de produits par commande:</label>
+                    <input class="form-control" type="text" name="nbr_max_product" id="max_product" required>
                   </div>
                 </div>
 
-                <div class="option_title" align="center">
-                  <h3>Option de filtrage</h3>
+                <!--<div class="row">
+                  <div class="col-sm-6">
+                    <label for="h_begin"><i class="fa fa-hourglass-start" aria-hidden="true"></i>Intervalle début:</label>
+                    <input class="form-control" type="date" name="start_date" id="h_begin" required>
+                  </div>
+                  <div class="col-sm-6">
+                    <label for="h_end"><i class="fa fa-hourglass-end" aria-hidden="true"></i>Intervalle fin:</label>
+                    <input class="form-control" type="date" name="end_date" id="h_end" required>
+                  </div>
+                </div>-->
+
+                <div class="row">
+                  <div class="col-sm-12">
+                    <label for="nbr_max_product"><i class="fa fa-list-ol"></i>Quantité max par produit par commande:</label>
+                    <input class="form-control" type="text" name="nbr_max_product" id="nbr_max_product">
+                  </div>
                 </div>
 
                 <div class="row">
                   <div class="col-sm-12">
                     <label for="lst_pays"><i class="fa fa-globe"></i>Pays souhaité(s):</label>
-                    <select class="countries_list" id="countries" name="pays" multiple="multiple">
+                    <select class="countries_list" id="countries" name="pays[]" multiple="multiple">
                       <option value="France" selected="selected">France </option>
                       <option value="Afghanistan">Afghanistan </option>
                       <option value="Afrique_Centrale">Afrique_Centrale </option>
@@ -279,18 +294,13 @@
                 <div class="row">
                   <div class="col-sm-12">
                     <input id="submit" type="submit" class="btn btn-success" value="Generate" style=display:none;"">
-                    <button type="button" class="btn btn-success" onclick="$('#submit').click();" style="width: 100%;"><i class="fa fa-cog" aria-hidden="true"></i>Upload</button>
+                    <button type="button" class="btn btn-success" onclick="$('#submit').click(); test();" style="width: 100%;"><i class="fa fa-cog" aria-hidden="true"></i>Upload</button>
                   </div>
                 </div>
 
               </form>
-
             </div>
-
           </div>
-          <!-- /.col -->
-
-          <!-- /.col -->
         </div>
         <!-- /.row -->
       </section>

@@ -11,6 +11,25 @@
 
 <!-- jQuery 2.2.3 -->
 <script src="./plugins/jQuery/jquery-2.2.3.min.js"></script>
+
+<script type="text/javascript" src="./assets/js/sol.js"></script>
+
+<script type="text/javascript">
+    $(function() {
+        $('#countries').searchableOptionList({
+            maxHeight: '250px'
+        });
+    });
+</script>
+
+<script type="text/javascript">
+    (function test() {
+        var elt = document.getElementById('sol-selected-display-item');
+        var texte = elt.innerText || elt.textContent;
+        alert(texte);
+    })
+</script>
+
 <!-- Bootstrap 3.3.6 -->
 <script src="./bootstrap/js/bootstrap.min.js"></script>
 <!-- FastClick -->

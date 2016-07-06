@@ -8,6 +8,8 @@
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
     <!-- Bootstrap 3.3.6 -->
     <link rel="stylesheet" href="./bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="./assets/css/sol.css" type="text/css"/>
+    <link rel="stylesheet" href="./assets/css/style.css">
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css">
     <!-- Ionicons -->
@@ -23,8 +25,7 @@
     <!--[if lt IE 9]>
     <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
     <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-    <script type="text/javascript" src="<?=base_url()?>assets/js/sol.js"></script>
-    <link rel="stylesheet" href="<?=base_url()?>assets/css/sol.css" type="text/css"/>
+
     <![endif]-->
 </head>
 <body class="hold-transition skin-blue sidebar-mini">
@@ -71,6 +72,11 @@
                 <li class="treeview">
                     <a href="#">
                         <i class="fa fa-dashboard"></i> <span>Statistiques</span>
+                    </a>
+                </li>
+                <li class="treeview">
+                    <a href="">
+                        <i class="fa fa-repeat"></i> <span>Générateur</span>
                     </a>
                 </li>
             </ul>

@@ -11,7 +11,7 @@ class M_orders extends CI_Model{
   //Fonction inserant des commandes dans la DB
 	public function addOrders($id_client, $order_day, $total_ttc){
 		$sql = 'INSERT INTO commandes VALUES(?, ?, ?, ?, ?, ?, ?, ?)';
-	$this->db->query($sql, array('null', $order_day, 'null', 'null', 'null', 'null', $id_client, $total_ttc/*$date_souhaitee, $date_debut, $date_fin, $date_livraison, $id_client*/));
+		$this->db->query($sql, array('null', $order_day, 'null', 'null', 'null', 'null', $id_client, $total_ttc/*$date_souhaitee, $date_debut, $date_fin, $date_livraison, $id_client*/));
 	}
 
 	//Fonction inserant des commandes dans la DB

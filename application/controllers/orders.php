@@ -14,7 +14,9 @@ class Orders extends CI_Controller {
 	  $this->load->model('M_orders');
 
 		//Insertion de la liste des produits de la DB dans un tableau
+		$this->M_orders->UpdateStockFinal($this->M_orders->selectAllProducts());
 		$all_products = $this->M_orders->selectAllProducts();
+
 
 		//Insertion de la liste des clients de la DB dans un tableau
 		$all_clients = $this->M_orders->selectAllClientsInfo();
@@ -23,8 +25,6 @@ class Orders extends CI_Controller {
 	  $n_week_order_number = $this->input->post('nbr_command');
 	  $max_products = $this->input->post('nbr_max_product');
 		$nbr_max_per_product = $this->input->post('nbr_max_product');
-	  /*$start_date = $this->input->post('start_date');
-	  $end_date = $this->input->post('end_date');*/
 	  $result_countries['pays'] = $this->input->post('pays[]');
 
 		//Création des dates d'intervalles
@@ -55,6 +55,86 @@ class Orders extends CI_Controller {
 				$this->M_orders->addLinkedProductsOrder($order->products);
 			}
 
+			$week_product_quantity = $this->M_orders->selectProductQuantity($start_date, $end_date);
+
+			$nbr_heure = 0;
+
+			foreach ($week_product_quantity as $wpq) {
+
+				$all_products = $this->M_orders->selectAllProducts();
+				$nbr_produits_stock_final = $all_products[$wpq['id_produit'] - 1]['stock_final'];
+				$quantite_produit = $wpq['SUM(quantite)'];
+				$nbr_produits_stock_A = $all_products[$wpq['id_produit'] - 1]['stock_A'];
+				$nbr_produits_stock_B = $all_products[$wpq['id_produit'] - 1]['stock_B'];
+				echo 'ID du produit: ' . $wpq['id_produit'] . '   -   Quantité: ' . $wpq['SUM(quantite)'] . '<br />';
+				echo 'Stock A: ' . $nbr_produits_stock_A  .    ' -   Stock B: ' . $nbr_produits_stock_B . '   -   Stock final: ' . $nbr_produits_stock_final . '   -   Nombre d\'heures passée: ' . $nbr_heure . '<br />';
+				//Vérification si le produit est déja en stock
+				if($nbr_produits_stock_final >= $quantite_produit){
+
+					//Présence de la quantité de produit nécessaire dans le stock
+					$nbr_produits_stock_final = $nbr_produits_stock_final - $quantite_produit;
+					echo 'Stock A: ' . $nbr_produits_stock_A  .    ' -   Stock B: ' . $nbr_produits_stock_B . '   -   Stock final: ' . $nbr_produits_stock_final . '   -   Nombre d\'heures passée: ' . $nbr_heure . '<br /><br />';
+				}
+				else {
+
+					//Tant que le nombre de produit commandé est inférieur au produit sortant de la première machine alors on créer
+					while ($nbr_produits_stock_A + $nbr_produits_stock_B + $nbr_produits_stock_final <= $quantite_produit) {
+
+						//Ajout de 180 pièces dans le stock A
+						$nbr_produits_stock_A = $nbr_produits_stock_A + 180;
+						$nbr_heure++;
+					}
+
+					echo 'Stock A: ' . $nbr_produits_stock_A  .    ' -   Stock B: ' . $nbr_produits_stock_B . '   -   Stock final: ' . $nbr_produits_stock_final . '   -   Nombre d\'heures passée: ' . $nbr_heure . '<br />';
+
+					//Passage du produit dans la machine B
+					if($nbr_produits_stock_A > 900){
+
+						$copy_nbr_produits_stock_A = $nbr_produits_stock_A;
+						while ($copy_nbr_produits_stock_A != $nbr_produits_stock_B) {
+
+								$nbr_produits_stock_B = $nbr_produits_stock_A > 900 ? $nbr_produits_stock_B + 900 : $nbr_produits_stock_B + $nbr_produits_stock_A;
+								$nbr_produits_stock_A = $nbr_produits_stock_A > 900 ? $nbr_produits_stock_A - 900 : $nbr_produits_stock_A - $nbr_produits_stock_A;
+								$nbr_heure += 3;
+						}
+					}
+					else {
+						$nbr_produits_stock_B = $nbr_produits_stock_A == 0 ? $nbr_produits_stock_B : $nbr_produits_stock_A;
+						$nbr_produits_stock_A = 0;
+						$nbr_heure += 3;
+						echo 'Stock A: ' . $nbr_produits_stock_A  .    ' -   Stock B: ' . $nbr_produits_stock_B . '   -   Stock final: ' . $nbr_produits_stock_final . '   -   Nombre d\'heures passée: ' . $nbr_heure . '<br />';
+					}
+
+					//Passage du prduit dans la machine C
+					if($nbr_produits_stock_B > 500){
+
+						while ($nbr_produits_stock_final < $quantite_produit) {
+
+								$nbr_produits_stock_final = $nbr_produits_stock_B > 500 ? $nbr_produits_stock_final + 500 : $nbr_produits_stock_final + $nbr_produits_stock_B;
+								$nbr_produits_stock_B = $nbr_produits_stock_B > 500 ? $nbr_produits_stock_B - 500 : $nbr_produits_stock_B - $nbr_produits_stock_B;
+								$nbr_heure += 2;
+								echo 'Stock A: ' . $nbr_produits_stock_A  .    ' -   Stock B: ' . $nbr_produits_stock_B . '   -   Stock final: ' . $nbr_produits_stock_final . '   -   Nombre d\'heures passée: ' . $nbr_heure . '<br />';
+						}
+
+						$nbr_produits_stock_final = $nbr_produits_stock_final - $quantite_produit;
+						echo 'Stock A: ' . $nbr_produits_stock_A  .    ' -   Stock B: ' . $nbr_produits_stock_B . '   -   Stock final: ' . $nbr_produits_stock_final . '   -   Nombre d\'heures passée: ' . $nbr_heure . '<br /><br />';
+					}
+					else {
+						$nbr_produits_stock_final = $nbr_produits_stock_final + $nbr_produits_stock_B - $quantite_produit;
+						$nbr_produits_stock_B = 0;
+						$nbr_heure += 2;
+						echo 'Stock A: ' . $nbr_produits_stock_A  .    ' -   Stock B: ' . $nbr_produits_stock_B . '   -   Stock final: ' . $nbr_produits_stock_final . '   -   Nombre d\'heures passée: ' . $nbr_heure . '<br /><br />';
+					}
+				}
+
+				$this->M_orders->UpdateProductStocks($wpq['id_produit'], $nbr_produits_stock_A, $nbr_produits_stock_B, $nbr_produits_stock_final);
+			}
+
+
+
+			//print_r($test);
+			echo '<br /><br /><br /><br /><br /><br />';
+
 			//calcul des intervalles de commandes hebdomadaires pour la semaine n+1
 			$min_week_order_number = floor($n_week_order_number * 0.85);
 			$max_week_order_number = floor($n_week_order_number * 1.15);
@@ -70,6 +150,7 @@ class Orders extends CI_Controller {
 			//Changement du nombre de commande pour la semaine n+1 (intervalle +- 15%)
 			$n_week_order_number = rand($min_week_order_number, $max_week_order_number);
 		}
+
 
 
 	  //Redirection sur la vue principale
@@ -142,10 +223,5 @@ class Orders extends CI_Controller {
 		//Changement du type de la date pour permettre le calcul
 		$start_date_timestamp = strtotime($start_date);
 		return date('Y-m-d H:i:s', strtotime('+1 week' . $start_date));
-	}
-
-	private function AlgoB(){
-
-
 	}
 }

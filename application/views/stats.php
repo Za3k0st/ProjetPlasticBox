@@ -94,6 +94,23 @@
           </div>
           <!-- /.box -->
 
+          <div class="box box-success">
+            <div class="box-header with-border">
+              <h3 class="box-title">Chiffre d'affaire par mois (en €)</h3>
+
+              <div class="box-tools pull-right">
+                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+                </button>
+                <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+              </div>
+            </div>
+            <div class="box-body chart-responsive">
+              <div class="chart" id="bar-chart" style="height: 300px;"></div>
+            </div>
+            <!-- /.box-body -->
+          </div>
+          <!-- /.box -->
+
         </div>
         <!-- /.col (RIGHT) -->
       </div>
@@ -112,6 +129,10 @@
 <script src="./bootstrap/js/bootstrap.min.js"></script>
 <!-- ChartJS 10.1 -->
 <script src="./plugins/chartjs/Chart.min.js"></script>
+
+<!-- Morris.js charts -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/raphael/2.1.0/raphael-min.js"></script>
+<script src="./plugins/morris/morris.min.js"></script>
 <!-- FastClick-->
 <script src="./plugins/fastclick/fastclick.js"></script>
 <!-- AdminLTE App -->
@@ -326,5 +347,25 @@ echo '{
 
     barChartOptions.datasetFill = false;
     barChart.Bar(barChartData, barChartOptions);
+
+    //BAR CHART
+    var bar = new Morris.Bar({
+      element: 'bar-chart',
+      resize: true,
+      data: [
+          <?php foreach($chiffre_affaire_mois as $chiffre){
+  echo '{y: '.$chiffre['mois'].', a:'.$chiffre['number'].'
+
+
+  },';
+}?>
+      ],
+      barColors: ['#00a65a', '#f56954'],
+      xkey: 'y',
+      ykeys: ['a', 'b'],
+      labels: ['CPU', 'DISK'],
+      hideHover: 'auto'
+    });
+
   });
 </script>

@@ -70,12 +70,12 @@
             <ul class="sidebar-menu">
                 <li class="header"></li>
                 <li class="treeview">
-                    <a href="#">
+                    <a href="./stats">
                         <i class="fa fa-dashboard"></i> <span>Statistiques</span>
                     </a>
                 </li>
                 <li class="treeview">
-                    <a href="">
+                    <a href="./">
                         <i class="fa fa-repeat"></i> <span>Générateur</span>
                     </a>
                 </li>

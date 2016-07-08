@@ -10,6 +10,7 @@ class Stats extends CI_Controller {
         $data['produits'] = $this->Model->get_produits();
         $data['commandes_pays'] = $this->Model->get_commandes_per_country();
         $data['ttc_country'] = $this->Model->get_ttc_country();
+        $data['chiffre_affaire_mois'] = $this->Model->get_chiffre_affaire_mois();
         $this->load->view('template/head');
         $this->load->view('stats', $data);
         $this->load->view('template/footer');
